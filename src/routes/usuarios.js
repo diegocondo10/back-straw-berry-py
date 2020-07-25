@@ -9,12 +9,7 @@ import { bodyValidator } from './middlewares';
 
 const UsuarioRouter = Router();
 
-UsuarioRouter.post(
-  '/listar',
-  [check('empCodigo', 'No se ha enviado el empCodigo').not().isEmpty()],
-  bodyValidator,
-  listarUsuarios,
-);
+UsuarioRouter.post('/listar', bodyValidator, listarUsuarios);
 
 UsuarioRouter.post(
   '/create',
