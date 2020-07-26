@@ -113,7 +113,9 @@ export const getPermisos = async (req, res, next) => {
 
 export const getPermisoById = async (req, res, next) => {
   try {
-    const permiso = await Permiso.findById(req.params._id).populate('aplicacion');
+    const permiso = await Permiso.findById(req.params._id).populate(
+      'aplicacion',
+    );
     res.status(200).json(permiso);
   } catch (error) {
     console.log(error);
@@ -170,9 +172,15 @@ export const createRol = async (req, res, next) => {
 
 export const getRoles = async (req, res, next) => {
   try {
-    const roles = await Rol.find()
-      .populate('permisos')
-      .populate('permisos.aplicacion');
+    const roles = await Rol.find().populate({
+      path: 'permisos',
+      select: 'nombre',
+      populate: {
+        path: 'aplicacion',
+        select: 'nombre',
+      },
+    });
+    //.populate('permisos', 'aplicacion');
     res.status(200).json(roles);
   } catch (error) {
     console.log(error);
