@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import UsuarioRouter from './usuarios';
+import AuthRouter from './Auth.routes';
 
 const ApiRouter = Router();
 
-ApiRouter.use('/usuarios', UsuarioRouter);
+ApiRouter.use('/auth', AuthRouter);
 
 export default ApiRouter;

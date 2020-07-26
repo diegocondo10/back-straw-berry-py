@@ -25,3 +25,9 @@ export const loginUsuarios = async (req, res, next) => {
     transaccion: true,
   });
 };
+/*
+  req: Request
+  res: Response
+  next: continuar a la siguiente funcion
+*/
+export const listarAlumnosByDocente = async (req, res, next) => {};
