@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import timestamps from 'mongoose-timestamp';
-import { createUpdateProps } from './BaseObjecProps';
 
 const AplicacionSchema = mongoose.Schema({
     nombre: {
@@ -35,9 +34,9 @@ const PermisoSchema = mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'Aplicaciones',
     },
-    ...createUpdateProps,
 });
-
+PermisoSchema.plugin(timestamps);
+PermisoSchema.index({ createdAt: 1, updatedAt: 1 });
 export const Permiso = mongoose.model('Permisos', PermisoSchema);
 
 const RolSchema = mongoose.Schema({
@@ -58,9 +57,9 @@ const RolSchema = mongoose.Schema({
             ref: 'Permisos',
         },
     ],
-    ...createUpdateProps,
 });
-
+RolSchema.plugin(timestamps);
+RolSchema.index({ createdAt: 1, updatedAt: 1 });
 export const Rol = mongoose.model('Roles', RolSchema);
 
 const UsuarioSchema = mongoose.Schema({
@@ -87,7 +86,7 @@ const UsuarioSchema = mongoose.Schema({
             ref: 'Permisos',
         },
     ],
-    ...createUpdateProps,
 });
-
+UsuarioSchema.plugin(timestamps);
+UsuarioSchema.index({ createdAt: 1, updatedAt: 1 });
 export const Usuario = mongoose.model('Usuarios', UsuarioSchema);
