@@ -3,16 +3,25 @@ import { check } from 'express-validator';
 import {
     createAplicacion,
     createPermiso,
+    createRol,
+    createUsuario,
     deleteAplicacion,
+    deletePermiso,
+    deleteRol,
+    deleteUsuario,
+    getAplicacinById,
     getAplicaciones,
     getAplicacionesByIdOrName,
-    updateAplicacion,
-    getPermisos,
     getPermisoById,
-    updatePermiso,
-    deletePermiso,
-    createRol,
+    getPermisos,
+    getRolById,
     getRoles,
+    getUsuarioById,
+    getUsuarios,
+    updateAplicacion,
+    updatePermiso,
+    updateRol,
+    updateUsuario,
 } from '../controllers/Auth.controller';
 import { bodyValidator } from './middlewares';
 
@@ -26,6 +35,7 @@ AuthRouter.post(
 );
 
 AuthRouter.get('/aplicaciones/', getAplicaciones);
+AuthRouter.get('/aplicaciones/:_id', getAplicacinById);
 AuthRouter.post('/aplicaciones/listar/', getAplicacionesByIdOrName);
 
 AuthRouter.put('/aplicaciones/:_id', updateAplicacion);
@@ -57,8 +67,27 @@ AuthRouter.post(
 );
 
 AuthRouter.get('/roles/', getRoles);
-AuthRouter.get('/roles/:_id', getPermisoById);
-AuthRouter.put('/roles/:_id', updatePermiso);
-AuthRouter.delete('/roles/:_id', deletePermiso);
+AuthRouter.get('/roles/:_id', getRolById);
+AuthRouter.put('/roles/:_id', updateRol);
+AuthRouter.delete('/roles/:_id', deleteRol);
+
+//RUTAS DE USUARIOS
+AuthRouter.post(
+    '/usuarios/',
+    [
+        check('nombre', 'NO SE HA ENVIADO EL NOMBRE').not().isEmpty(),
+        check('permisos', 'NO SE HA ENVIADO LOS PERMISOS').not().isEmpty(),
+        check('permisos', 'PERMISOS DEBE SER DE TIPO ARRAY').isArray(),
+        check('roles', 'NO SE HA ENVIADO LOS PERMISOS').not().isEmpty(),
+        check('roles', 'PERMISOS DEBE SER DE TIPO ARRAY').isArray(),
+    ],
+    bodyValidator,
+    createUsuario,
+);
+
+AuthRouter.get('/usuarios/', getUsuarios);
+AuthRouter.get('/usuarios/:_id', getUsuarioById);
+AuthRouter.put('/usuarios/:_id', updateUsuario);
+AuthRouter.delete('/usuarios/:_id', deleteUsuario);
 
 export default AuthRouter;
